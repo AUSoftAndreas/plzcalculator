@@ -1,4 +1,4 @@
-name: "Set issue state"
+name: 'Set issue state'
 
 on:
   project_card:
@@ -11,5 +11,5 @@ jobs:
       - uses: dessant/issue-states@v2
         with:
           github-token: ${{ github.token }}
-          open-issue-columns: ""
-          closed-issue-columns: "Closed, Done"
+          open-issue-columns: ''
+          closed-issue-columns: 'Closed, Done'
