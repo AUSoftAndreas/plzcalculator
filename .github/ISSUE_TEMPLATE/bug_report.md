@@ -1,8 +1,8 @@
 ---
 name: Bug report / Fehlermeldung
 about: Help us kill the bugs / Hilf bei der Fehlersuche
-title: "[PLZ][BUG] "
-labels: "PLZ Bug"
+title: "[BUG] "
+labels: "Bug"
 assignees: ""
 ---
 
