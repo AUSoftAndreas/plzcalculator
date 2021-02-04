@@ -23,8 +23,8 @@ class GoogleMapProvider implements MapProvider {
       return Resultat(error: true, errorMessage: json['error_message']);
     } else {
       return Resultat(
-        fahrtstrecke: json['routes']['0']['legs']['0']['distance']['value'],
-        fahrtzeit: json['routes']['0']['legs']['0']['duration']['value'],
+        fahrtstrecke: json['routes'][0]['legs'][0]['distance']['value'],
+        fahrtzeit: json['routes'][0]['legs'][0]['duration']['value'],
       );
     }
   }
