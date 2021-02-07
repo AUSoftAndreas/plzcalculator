@@ -5,9 +5,10 @@ class Eingabe {
   String _zielPlz;
   String _startPlz;
 
-  Eingabe(this._zielPlz) {
+  Eingabe(zielPlz) {
     Settings settings = Settings();
     _startPlz = settings.ausgangsort;
+    _zielPlz = zielPlz;
   }
 
   /// PLZ des Zielortes

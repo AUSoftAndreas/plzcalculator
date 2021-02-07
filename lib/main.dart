@@ -12,9 +12,6 @@ void main() {
   runApp(MyApp());
 }
 
-//ihigigm,,iigijiojiojio
-
-
 /// Applikation-Objekt
 class MyApp extends StatefulWidget {
   @override
@@ -60,12 +57,9 @@ class _MyAppState extends State<MyApp> {
         initialRoute: _initialRoute,
         // home: CalculatorScreen(),
         getPages: [
-          GetPage(
-              name: CalculatorScreen.routeName, page: () => CalculatorScreen()),
+          GetPage(name: CalculatorScreen.routeName, page: () => CalculatorScreen()),
           GetPage(name: SettingsScreen.routeName, page: () => SettingsScreen()),
-          GetPage(
-              name: ResultatScreen.routeName,
-              page: () => ResultatScreen(Resultat())),
+          GetPage(name: ResultatScreen.routeName, page: () => ResultatScreen(Resultat())),
         ],
       );
 }
