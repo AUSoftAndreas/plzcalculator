@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:plzcalculator/models/resultat.dart';
+import 'package:plzcalculator/screens/settings_screen.dart';
 
 class ResultatScreen extends StatelessWidget {
   static String routeName = '/resultat';
-  final Resultat _resultat;
 
-  ResultatScreen(this._resultat);
+  ResultatScreen();
 
   @override
   Widget build(BuildContext context) {
+    final _resultat = (ModalRoute.of(context)?.settings.arguments as Resultat);
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Resultat'),
@@ -17,70 +18,64 @@ class ResultatScreen extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.settings),
             onPressed: () {
-              Get.toNamed('/settings');
+              Navigator.pushNamed(context, SettingsScreen.routeName);
             },
           ),
         ],
       ),
-      body: MediaQuery.of(context).orientation == Orientation.landscape
-          ? buildBodyLandscape()
-          : buildBodyPortrait(),
+      body: MediaQuery.of(context).orientation == Orientation.landscape ? buildBodyLandscape(_resultat) : buildBodyPortrait(_resultat),
     );
   }
 
-  SingleChildScrollView buildBodyPortrait() {
+  SingleChildScrollView buildBodyPortrait(Resultat _resultat) {
     return SingleChildScrollView(
-      child: Flex(
-          direction: Axis.vertical,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            buildHeader('Angaben zur Strecke'),
-            buildCard(
-              'km',
-              '${_resultat.fahrtstrecke ~/ 1000} km',
+      child: Flex(direction: Axis.vertical, crossAxisAlignment: CrossAxisAlignment.start, children: [
+        buildHeader('Angaben zur Strecke'),
+        buildCard(
+          'km',
+          '${(_resultat.fahrtstrecke ?? 0) ~/ 1000} km',
+        ),
+        buildCard('Zeit', '${(_resultat.fahrtzeit ?? 0) ~/ 3600} Stunden, ${((_resultat.fahrtzeit ?? 0) % 3600) ~/ 60} Minuten'
+            //_resultat.fahrtkostenZeit.toString(),
             ),
-            buildCard('Zeit',
-                '${_resultat.fahrtzeit ~/ 3600} Stunden, ${(_resultat.fahrtzeit % 3600) ~/ 60} Minuten'
-                //_resultat.fahrtkostenZeit.toString(),
-                ),
-            buildHeader('Angaben zu den Kosten'),
-            buildCard(
-              'Fahrtkosten (Strecke)',
-              '${_resultat.fahrtkostenStrecke ~/ 100},${(_resultat.fahrtkostenStrecke % 100) ~/ 10}${_resultat.fahrtkostenStrecke % 10} €',
-              '+',
-            ),
-            buildCard(
-              'Fahrtkosten (Zeit)',
-              '${_resultat.fahrtkostenZeit ~/ 100},${(_resultat.fahrtkostenZeit % 100) ~/ 10}${_resultat.fahrtkostenZeit % 10} €',
-              '+',
-            ),
-            buildCard(
-              'Hotelkosten',
-              '${_resultat.hotelkosten ~/ 100},${(_resultat.hotelkosten % 100) ~/ 10}${_resultat.hotelkosten % 10} €',
-              '+',
-            ),
-            buildDivider(1),
-            buildCard(
-              'Summe',
-              '${_resultat.summe ~/ 100},${(_resultat.summe % 100) ~/ 10}${_resultat.summe % 10} €',
-              '=',
-            ),
-            buildCard(
-              'Mehrwertsteuer',
-              '${_resultat.mwst ~/ 100},${(_resultat.mwst % 100) ~/ 10}${_resultat.mwst % 10} €',
-              '+',
-            ),
-            buildDivider(2),
-            buildCard(
-              'Bruttosumme',
-              '${_resultat.bruttosumme ~/ 100},${(_resultat.bruttosumme % 100) ~/ 10}${_resultat.bruttosumme % 10} €',
-              '=',
-            ),
-          ]),
+        buildHeader('Angaben zu den Kosten'),
+        buildCard(
+          'Fahrtkosten (Strecke)',
+          '${_resultat.fahrtkostenStrecke ~/ 100},${(_resultat.fahrtkostenStrecke % 100) ~/ 10}${_resultat.fahrtkostenStrecke % 10} €',
+          '+',
+        ),
+        buildCard(
+          'Fahrtkosten (Zeit)',
+          '${_resultat.fahrtkostenZeit ~/ 100},${(_resultat.fahrtkostenZeit % 100) ~/ 10}${_resultat.fahrtkostenZeit % 10} €',
+          '+',
+        ),
+        buildCard(
+          'Hotelkosten',
+          '${_resultat.hotelkosten ~/ 100},${(_resultat.hotelkosten % 100) ~/ 10}${_resultat.hotelkosten % 10} €',
+          '+',
+        ),
+        buildDivider(1),
+        buildCard(
+          'Summe',
+          '${_resultat.summe ~/ 100},${(_resultat.summe % 100) ~/ 10}${_resultat.summe % 10} €',
+          '=',
+        ),
+        buildCard(
+          'Mehrwertsteuer',
+          '${_resultat.mwst ~/ 100},${(_resultat.mwst % 100) ~/ 10}${_resultat.mwst % 10} €',
+          '+',
+        ),
+        buildDivider(2),
+        buildCard(
+          'Bruttosumme',
+          '${_resultat.bruttosumme ~/ 100},${(_resultat.bruttosumme % 100) ~/ 10}${_resultat.bruttosumme % 10} €',
+          '=',
+        ),
+      ]),
     );
   }
 
-  SingleChildScrollView buildBodyLandscape() {
+  SingleChildScrollView buildBodyLandscape(Resultat _resultat) {
     return SingleChildScrollView(
       child: Flex(
         direction: Axis.horizontal,
@@ -96,8 +91,7 @@ class ResultatScreen extends StatelessWidget {
                   'km',
                   _resultat.fahrtstrecke.toString(),
                 ),
-                buildCard('Zeit',
-                    '${_resultat.fahrtzeit ~/ 60} Stunden, ${_resultat.fahrtzeit % 60} Minuten'
+                buildCard('Zeit', '${_resultat.fahrtzeit ?? 0 ~/ 60} Stunden, ${_resultat.fahrtzeit ?? 0 % 60} Minuten'
                     //_resultat.fahrtkostenZeit.toString(),
                     ),
               ],
@@ -165,7 +159,7 @@ class ResultatScreen extends StatelessWidget {
     );
   }
 
-  Padding buildCard(String title, String value, [String operator]) {
+  Padding buildCard(String title, String value, [String? operator]) {
     return Padding(
       padding: const EdgeInsets.all(8),
       child: Flex(
@@ -178,9 +172,7 @@ class ResultatScreen extends StatelessWidget {
               title,
               style: TextStyle(
                 fontSize: 18,
-                fontWeight: operator == null || operator != '='
-                    ? FontWeight.normal
-                    : FontWeight.bold,
+                fontWeight: operator == null || operator != '=' ? FontWeight.normal : FontWeight.bold,
               ),
             ),
           ),
@@ -190,9 +182,7 @@ class ResultatScreen extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
                   fontSize: 18,
-                  fontWeight: operator == null || operator != '='
-                      ? FontWeight.normal
-                      : FontWeight.bold,
+                  fontWeight: operator == null || operator != '=' ? FontWeight.normal : FontWeight.bold,
                 )),
           ),
         ],

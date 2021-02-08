@@ -3,13 +3,9 @@ import 'package:plzcalculator/models/settings.dart';
 /// Diese Klasse fasst alle Daten zu einer konkreten Suchanfrage zusammen
 class Eingabe {
   String _zielPlz;
-  String _startPlz;
+  String _startPlz = Settings().ausgangsort;
 
-  Eingabe(zielPlz) {
-    Settings settings = Settings();
-    _startPlz = settings.ausgangsort;
-    _zielPlz = zielPlz;
-  }
+  Eingabe(String zielPlz) : _zielPlz = zielPlz;
 
   /// PLZ des Zielortes
   String get zielPlz => _zielPlz;

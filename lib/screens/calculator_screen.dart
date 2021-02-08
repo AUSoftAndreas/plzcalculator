@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:plzcalculator/functions/functions.dart';
 import 'package:plzcalculator/models/eingabe.dart';
 import 'package:plzcalculator/models/resultat.dart';
 import 'package:plzcalculator/providers/map_provider_interface.dart';
 import 'package:plzcalculator/screens/resultat_screen.dart';
+import 'package:plzcalculator/screens/settings_screen.dart';
 
 class CalculatorScreen extends StatefulWidget {
   static String routeName = '/';
@@ -30,16 +30,10 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
 
     if (MediaQuery.of(context).orientation == Orientation.portrait) {
       calcHeight = 80;
-      resY = MediaQuery.of(context).size.height -
-          screenPadding.top -
-          screenPadding.bottom -
-          kToolbarHeight -
-          calcHeight;
+      resY = MediaQuery.of(context).size.height - screenPadding.top - screenPadding.bottom - kToolbarHeight - calcHeight;
       //resY = 10 * stdPadding + 4 * buttSize;
       double buttSizeY = (resY - 11 * stdPadding) / 4;
-      resX = MediaQuery.of(context).size.width -
-          screenPadding.left -
-          screenPadding.right;
+      resX = MediaQuery.of(context).size.width - screenPadding.left - screenPadding.right;
       //resX = 6 * stdPadding + 3 * buttSizeX
       double buttSizeX = (resX - 6 * stdPadding) / 3;
       padX = stdPadding;
@@ -55,15 +49,9 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
     } else {
       // LANDSCAPE
       calcHeight = 80;
-      resY = MediaQuery.of(context).size.height -
-          screenPadding.top -
-          screenPadding.bottom -
-          kToolbarHeight -
-          calcHeight;
+      resY = MediaQuery.of(context).size.height - screenPadding.top - screenPadding.bottom - kToolbarHeight - calcHeight;
       double buttSizeY = (resY - 6 * stdPadding) / 2;
-      resX = MediaQuery.of(context).size.width -
-          screenPadding.left -
-          screenPadding.right;
+      resX = MediaQuery.of(context).size.width - screenPadding.left - screenPadding.right;
       double buttSizeX = (resX - 12 * stdPadding) / 6;
       padX = stdPadding;
       padY = stdPadding;
@@ -87,7 +75,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
           IconButton(
             icon: Icon(Icons.settings),
             onPressed: () {
-              Get.toNamed('/settings');
+              Navigator.pushNamed(context, SettingsScreen.routeName);
             },
           ),
         ],
@@ -122,10 +110,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
               height: resY,
               width: resX,
               child: GridView.count(
-                crossAxisCount:
-                    (MediaQuery.of(context).orientation == Orientation.portrait)
-                        ? 3
-                        : 6,
+                crossAxisCount: (MediaQuery.of(context).orientation == Orientation.portrait) ? 3 : 6,
                 crossAxisSpacing: 2 * padX,
                 mainAxisSpacing: 2 * padY,
                 children: _buildKeys(MediaQuery.of(context).orientation),
@@ -160,8 +145,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
             ),
           ),
         );
-      } else if ((x == 10 && orientation == Orientation.portrait) ||
-          (x == 11 && orientation == Orientation.landscape)) {
+      } else if ((x == 10 && orientation == Orientation.portrait) || (x == 11 && orientation == Orientation.landscape)) {
         list.add(
           Card(
             color: Colors.grey[350],
@@ -181,8 +165,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
             ),
           ),
         );
-      } else if ((x == 11 && orientation == Orientation.portrait) ||
-          (x == 10 && orientation == Orientation.landscape)) {
+      } else if ((x == 11 && orientation == Orientation.portrait) || (x == 10 && orientation == Orientation.landscape)) {
         list.add(
           Card(
             color: Colors.grey[350],
@@ -235,13 +218,11 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
         });
       }
     } else if (key == 'OK') {
-      if (_eingabe != null &&
-          _eingabe.length == 5 &&
-          Funktionen.isNumeric(_eingabe)) {
+      if (_eingabe != null && _eingabe.length == 5 && Funktionen.isNumeric(_eingabe)) {
         MapProvider mp = MapProvider();
         Resultat resultat = await mp.getResult(Eingabe(_eingabe));
         if (resultat != null) {
-          Get.to(ResultatScreen(resultat));
+          Navigator.pushNamed(context, ResultatScreen.routeName, arguments: resultat);
         }
       }
     } else {

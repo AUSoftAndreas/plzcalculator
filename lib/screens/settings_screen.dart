@@ -1,7 +1,6 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:plzcalculator/models/settings.dart';
 import 'package:plzcalculator/screens/calculator_screen.dart';
 
@@ -21,7 +20,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   // Fall, dass wir manuell hier im Code _showEingabefeld auf true setzen, eine
   // Fehlermeldung wegen Wert null erscheint.
   String _inputBoxTopic = 'Wird eh überschrieben';
-  Function _inputBoxInputHandler;
+  Function _inputBoxInputHandler = () {};
 
   @override
   void initState() {
@@ -45,8 +44,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
             children: [
               buildCard(
                 title: 'Ausgangsort',
-                currentValue: _settings.ausgangsort ?? '',
-                currentValueFormattedString: _settings.ausgangsort ?? '',
+                currentValue: _settings.ausgangsort,
+                currentValueFormattedString: _settings.ausgangsort,
                 times100: false,
                 newValueHandler: _settings.setAusgangsort,
               ),
@@ -126,10 +125,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   log('settings.inialized: ${_settings.initialized}');
                   if (_settings.initialized) {
                     _settings.initialized = true;
-                    Get.back();
+                    Navigator.pop(context);
                   } else {
                     _settings.initialized = true;
-                    Get.offAllNamed(CalculatorScreen.routeName);
+                    Navigator.pushReplacementNamed(context, CalculatorScreen.routeName);
                   }
                 },
                 child: Card(
@@ -273,8 +272,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                     // gerade editiert wird. Das ganze wird verpackt in setState,
                                     // damit sich die GUI updated.
                                     setState(() {
-                                      _inputBoxInputHandler(
-                                          _inputBoxTextFieldController.text);
+                                      _inputBoxInputHandler(_inputBoxTextFieldController.text);
                                       _showEingabefeld = false;
                                     });
                                   },
@@ -295,11 +293,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   InkWell buildCard({
-    @required String title,
-    @required dynamic currentValue,
-    @required String currentValueFormattedString,
-    @required Function newValueHandler,
-    @required bool times100,
+    required String title,
+    required dynamic currentValue,
+    required String currentValueFormattedString,
+    required Function newValueHandler,
+    bool times100 = false,
   }) {
     return InkWell(
       onTap: () {
@@ -349,10 +347,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   void _showInputBox({
-    String title,
+    required String title,
     dynamic currentValue,
-    Function newValueHandler,
-    bool times100,
+    required Function newValueHandler,
+    bool times100 = false,
   }) {
     // den Handler, mit dem wir später den Wert wieder in die Settings schreiben,
     // speichern wir zwischen in einer Variablen dieser Klasse
@@ -372,13 +370,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
         current = '0$current';
       }
       // Danach: Alles, bis auf die letzten zwei Zeichen plus Komma plus die letzten zwei Zeichen
-      current = current.substring(0, current.length - 2) +
-          ',' +
-          current.substring(current.length - 2);
+      current = current.substring(0, current.length - 2) + ',' + current.substring(current.length - 2);
     }
     // Dieser Wert wird nun in den TextEditingController geschrieben
-    _inputBoxTextFieldController =
-        TextEditingController.fromValue(TextEditingValue(text: current));
+    _inputBoxTextFieldController = TextEditingController.fromValue(TextEditingValue(text: current));
     // Das Textfeld wird eingeblendet
     setState(() {
       _showEingabefeld = true;
