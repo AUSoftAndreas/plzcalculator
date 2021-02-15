@@ -1,8 +1,6 @@
-// @dart=2.9
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:plzcalculator/models/resultat.dart';
 import 'package:plzcalculator/models/settings.dart';
 import 'package:plzcalculator/screens/calculator_screen.dart';
 import 'package:plzcalculator/screens/resultat_screen.dart';

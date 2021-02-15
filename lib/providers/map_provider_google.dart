@@ -14,9 +14,9 @@ class GoogleMapProvider implements MapProvider {
     final zielPlz = eingabe.zielPlz;
     final startPlz = eingabe.startPlz;
     final client = http.Client();
-    final url =
-        'https://maps.googleapis.com/maps/api/directions/json?origin=$startPlz+Deutschland&destination=$zielPlz+Deutschland&key=AIzaSyAOhmbRSKBiyY3j3Nm03wYUl-tXot-Q_04';
-    final http.Response response = await client.get(url);
+    final uri = Uri.https('maps.googleapis.com', 'maps/api/directions/json',
+        {'origin': '$startPlz Deutschland', 'destination': '$zielPlz Deutschland', 'key': 'AIzaSyAOhmbRSKBiyY3j3Nm03wYUl-tXot-Q_04'});
+    final response = await client.get(uri);
     if (response.statusCode != 200) {
       return Resultat(error: true, errorMessage: 'Keine Internetverbindung');
     }
