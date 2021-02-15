@@ -7,19 +7,21 @@ import 'package:plzcalculator/providers/map_provider_interface.dart';
 import 'package:plzcalculator/models/eingabe.dart';
 import 'package:plzcalculator/models/resultat.dart';
 
+/// Holt Daten von Google Maps ein
 class GoogleMapProvider implements MapProvider {
+  @override
   Future<Resultat> getResult(Eingabe eingabe) async {
-    String zielPlz = eingabe.zielPlz;
-    String startPlz = eingabe.startPlz;
-    http.Client client = http.Client();
-    String url =
+    final zielPlz = eingabe.zielPlz;
+    final startPlz = eingabe.startPlz;
+    final client = http.Client();
+    final url =
         'https://maps.googleapis.com/maps/api/directions/json?origin=$startPlz+Deutschland&destination=$zielPlz+Deutschland&key=AIzaSyAOhmbRSKBiyY3j3Nm03wYUl-tXot-Q_04';
     final http.Response response = await client.get(url);
     if (response.statusCode != 200) {
       return Resultat(error: true, errorMessage: 'Keine Internetverbindung');
     }
-    String body = response.body;
-    Map<String, dynamic> json = jsonDecode(body);
+    final body = response.body;
+    final Map<String, dynamic> json = jsonDecode(body);
     if (json.containsKey('error_message')) {
       return Resultat(error: true, errorMessage: json['error_message']);
     } else if (json['status'] == 'NOT_FOUND') {
