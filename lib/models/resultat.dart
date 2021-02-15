@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:plzcalculator/models/settings.dart';
 
 /// Das Ergebniss der anfrage
@@ -41,7 +40,7 @@ class Resultat {
     this.error = false,
     this.errorMessage,
   }) {
-    Settings settings = Settings();
+    final settings = Settings();
     if (fahrtstrecke == null || fahrtzeit == null) {
       return;
     }
