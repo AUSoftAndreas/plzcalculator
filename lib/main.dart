@@ -41,7 +41,7 @@ class _MyAppState extends State<MyApp> {
         routes: {
           CalculatorScreen.routeName: (context) => CalculatorScreen(),
           SettingsScreen.routeName: (context) => SettingsScreen(),
-          ResultatScreen.routeName: (context) => ResultatScreen(),
+          ResultatScreen.routeName: (context) => const ResultatScreen(),
         },
       );
 }

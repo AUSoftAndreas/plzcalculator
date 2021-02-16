@@ -22,7 +22,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   // Fall, dass wir manuell hier im Code _showEingabefeld auf true setzen, eine
   // Fehlermeldung wegen Wert null erscheint.
   String _inputBoxTopic = 'Wird eh überschrieben';
-  // TODO : Nochmal Prüfen
+  // TODO : Nochmal prüfen
   // ignore: prefer_function_declarations_over_variables
   Function _inputBoxInputHandler = () {};
 
@@ -45,21 +45,20 @@ class _SettingsScreenState extends State<SettingsScreen> {
           children: [
             ListView(
               children: [
-                buildCard(
+                _buildCard(
                   title: 'Ausgangsort',
                   currentValue: _settings.ausgangsort,
                   currentValueFormattedString: _settings.ausgangsort,
                   newValueHandler: _settings.setAusgangsort,
                 ),
-                buildCard(
+                _buildCard(
                   title: 'Fahrtkosten / km',
                   currentValue: _settings.fahrtkostenKm,
-                  currentValueFormattedString:
-                      _getEuro(_settings.fahrtkostenKm),
+                  currentValueFormattedString: _getEuro(_settings.fahrtkostenKm),
                   times100: true,
                   newValueHandler: _settings.setFahrtkostenKm,
                 ),
-                buildCard(
+                _buildCard(
                   title: 'Fahrtkosten / Stunde',
                   currentValue: _settings.fahrtkostenH,
                   currentValueFormattedString: _getEuro(_settings.fahrtkostenH),
@@ -93,26 +92,26 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     ),
                   ),
                 ),
-                buildCard(
+                _buildCard(
                   title: 'Hotelkosten',
                   currentValue: _settings.hotelKosten,
                   currentValueFormattedString: _getEuro(_settings.hotelKosten),
                   times100: true,
                   newValueHandler: _settings.setHotelKosten,
                 ),
-                buildCard(
+                _buildCard(
                   title: 'Hotel ab km',
                   currentValue: _settings.hotelAbKm,
                   currentValueFormattedString: '${_settings.hotelAbKm} km',
                   newValueHandler: _settings.setHotelAbKm,
                 ),
-                buildCard(
+                _buildCard(
                   title: 'Hotel ab h',
                   currentValue: _settings.hotelAbH,
                   currentValueFormattedString: '${_settings.hotelAbH} h',
                   newValueHandler: _settings.setHotelAbH,
                 ),
-                buildCard(
+                _buildCard(
                   title: 'Mehrwertsteuersatz',
                   currentValue: _settings.mwstSatz,
                   currentValueFormattedString: '${_settings.mwstSatz} %',
@@ -127,8 +126,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       Navigator.pop(context);
                     } else {
                       _settings.initialized = true;
-                      Navigator.pushReplacementNamed(
-                          context, CalculatorScreen.routeName);
+                      Navigator.pushReplacementNamed(context, CalculatorScreen.routeName);
                     }
                   },
                   child: Card(
@@ -272,8 +270,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                       // gerade editiert wird. Das ganze wird verpackt in setState,
                                       // damit sich die GUI updated.
                                       setState(() {
-                                        _inputBoxInputHandler(
-                                            _inputBoxTextFieldController.text);
+                                        _inputBoxInputHandler(_inputBoxTextFieldController.text);
                                         _showEingabefeld = false;
                                       });
                                     },
@@ -292,7 +289,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         ),
       );
 
-  InkWell buildCard({
+  InkWell _buildCard({
     required String title,
     required dynamic currentValue,
     required String currentValueFormattedString,
@@ -370,13 +367,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
         current = '0$current';
       }
       // Danach: Alles, bis auf die letzten zwei Zeichen plus Komma plus die letzten zwei Zeichen
-      current = current.substring(0, current.length - 2) +
-          ',' +
-          current.substring(current.length - 2);
+      // ignore: prefer_interpolation_to_compose_strings
+      current = current.substring(0, current.length - 2) + ',' + current.substring(current.length - 2);
     }
     // Dieser Wert wird nun in den TextEditingController geschrieben
-    _inputBoxTextFieldController =
-        TextEditingController.fromValue(TextEditingValue(text: current));
+    _inputBoxTextFieldController = TextEditingController.fromValue(TextEditingValue(text: current));
     // Das Textfeld wird eingeblendet
     setState(() {
       _showEingabefeld = true;
