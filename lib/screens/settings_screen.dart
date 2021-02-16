@@ -4,14 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:plzcalculator/models/settings.dart';
 import 'package:plzcalculator/screens/calculator_screen.dart';
 
+/// Screen für Einstellungen
 class SettingsScreen extends StatefulWidget {
+  /// Route zum Screen der Einstellung
   static String routeName = '/settings';
   @override
   _SettingsScreenState createState() => _SettingsScreenState();
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-  Settings _settings = Settings();
+  final Settings _settings = Settings();
   //bool _initializedOnStart;
   bool _showEingabefeld = false;
   TextEditingController _inputBoxTextFieldController = TextEditingController();
@@ -20,6 +22,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
   // Fall, dass wir manuell hier im Code _showEingabefeld auf true setzen, eine
   // Fehlermeldung wegen Wert null erscheint.
   String _inputBoxTopic = 'Wird eh überschrieben';
+  // TODO : Nochmal Prüfen
+  // ignore: prefer_function_declarations_over_variables
   Function _inputBoxInputHandler = () {};
 
   @override
@@ -31,266 +35,262 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Einstellungen',
+  Widget build(BuildContext context) => Scaffold(
+        appBar: AppBar(
+          title: const Text(
+            'Einstellungen',
+          ),
         ),
-      ),
-      body: Stack(
-        children: [
-          ListView(
-            children: [
-              buildCard(
-                title: 'Ausgangsort',
-                currentValue: _settings.ausgangsort,
-                currentValueFormattedString: _settings.ausgangsort,
-                times100: false,
-                newValueHandler: _settings.setAusgangsort,
-              ),
-              buildCard(
-                title: 'Fahrtkosten / km',
-                currentValue: _settings.fahrtkostenKm,
-                currentValueFormattedString: _getEuro(_settings.fahrtkostenKm),
-                times100: true,
-                newValueHandler: _settings.setFahrtkostenKm,
-              ),
-              buildCard(
-                title: 'Fahrtkosten / Stunde',
-                currentValue: _settings.fahrtkostenH,
-                currentValueFormattedString: _getEuro(_settings.fahrtkostenH),
-                times100: true,
-                newValueHandler: _settings.setFahrtkostenH,
-              ),
-              Card(
-                color: Colors.blue[50],
-                child: Padding(
-                  padding: const EdgeInsets.all(8),
-                  child: Flex(
-                    direction: Axis.horizontal,
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      Expanded(
-                        child: Text(
-                          'Hotelübernachtung?',
-                          style: TextStyle(fontSize: 18),
-                        ),
-                      ),
-                      Switch(
-                        value: _settings.hotel,
-                        onChanged: (value) {
-                          setState(() {
-                            _settings.hotel = value;
-                          });
-                        },
-                        activeTrackColor: Colors.lightGreenAccent,
-                        activeColor: Colors.green,
-                      ),
-                    ],
-                  ),
+        body: Stack(
+          children: [
+            ListView(
+              children: [
+                buildCard(
+                  title: 'Ausgangsort',
+                  currentValue: _settings.ausgangsort,
+                  currentValueFormattedString: _settings.ausgangsort,
+                  newValueHandler: _settings.setAusgangsort,
                 ),
-              ),
-              buildCard(
-                title: 'Hotelkosten',
-                currentValue: _settings.hotelKosten,
-                currentValueFormattedString: _getEuro(_settings.hotelKosten),
-                times100: true,
-                newValueHandler: _settings.setHotelKosten,
-              ),
-              buildCard(
-                title: 'Hotel ab km',
-                currentValue: _settings.hotelAbKm,
-                currentValueFormattedString: '${_settings.hotelAbKm} km',
-                times100: false,
-                newValueHandler: _settings.setHotelAbKm,
-              ),
-              buildCard(
-                title: 'Hotel ab h',
-                currentValue: _settings.hotelAbH,
-                currentValueFormattedString: '${_settings.hotelAbH} h',
-                times100: false,
-                newValueHandler: _settings.setHotelAbH,
-              ),
-              buildCard(
-                title: 'Mehrwertsteuersatz',
-                currentValue: _settings.mwstSatz,
-                currentValueFormattedString: '${_settings.mwstSatz} %',
-                times100: false,
-                newValueHandler: _settings.setMwstSatz,
-              ),
-              InkWell(
-                onTap: () {
-                  // if (_initializedOnStart) {
-                  log('settings.inialized: ${_settings.initialized}');
-                  if (_settings.initialized) {
-                    _settings.initialized = true;
-                    Navigator.pop(context);
-                  } else {
-                    _settings.initialized = true;
-                    Navigator.pushReplacementNamed(context, CalculatorScreen.routeName);
-                  }
-                },
-                child: Card(
-                  color: Colors.green[200],
+                buildCard(
+                  title: 'Fahrtkosten / km',
+                  currentValue: _settings.fahrtkostenKm,
+                  currentValueFormattedString:
+                      _getEuro(_settings.fahrtkostenKm),
+                  times100: true,
+                  newValueHandler: _settings.setFahrtkostenKm,
+                ),
+                buildCard(
+                  title: 'Fahrtkosten / Stunde',
+                  currentValue: _settings.fahrtkostenH,
+                  currentValueFormattedString: _getEuro(_settings.fahrtkostenH),
+                  times100: true,
+                  newValueHandler: _settings.setFahrtkostenH,
+                ),
+                Card(
+                  color: Colors.blue[50],
                   child: Padding(
                     padding: const EdgeInsets.all(8),
-                    child: Text(
-                      'Änderungen übernehmen. Weiter.',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
+                    child: Flex(
+                      direction: Axis.horizontal,
+                      children: [
+                        const Expanded(
+                          child: Text(
+                            'Hotelübernachtung?',
+                            style: TextStyle(fontSize: 18),
+                          ),
+                        ),
+                        Switch(
+                          value: _settings.hotel,
+                          onChanged: (value) {
+                            setState(() {
+                              _settings.hotel = value;
+                            });
+                          },
+                          activeTrackColor: Colors.lightGreenAccent,
+                          activeColor: Colors.green,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                buildCard(
+                  title: 'Hotelkosten',
+                  currentValue: _settings.hotelKosten,
+                  currentValueFormattedString: _getEuro(_settings.hotelKosten),
+                  times100: true,
+                  newValueHandler: _settings.setHotelKosten,
+                ),
+                buildCard(
+                  title: 'Hotel ab km',
+                  currentValue: _settings.hotelAbKm,
+                  currentValueFormattedString: '${_settings.hotelAbKm} km',
+                  newValueHandler: _settings.setHotelAbKm,
+                ),
+                buildCard(
+                  title: 'Hotel ab h',
+                  currentValue: _settings.hotelAbH,
+                  currentValueFormattedString: '${_settings.hotelAbH} h',
+                  newValueHandler: _settings.setHotelAbH,
+                ),
+                buildCard(
+                  title: 'Mehrwertsteuersatz',
+                  currentValue: _settings.mwstSatz,
+                  currentValueFormattedString: '${_settings.mwstSatz} %',
+                  newValueHandler: _settings.setMwstSatz,
+                ),
+                InkWell(
+                  onTap: () {
+                    // if (_initializedOnStart) {
+                    log('settings.inialized: ${_settings.initialized}');
+                    if (_settings.initialized) {
+                      _settings.initialized = true;
+                      Navigator.pop(context);
+                    } else {
+                      _settings.initialized = true;
+                      Navigator.pushReplacementNamed(
+                          context, CalculatorScreen.routeName);
+                    }
+                  },
+                  child: Card(
+                    color: Colors.green[200],
+                    child: const Padding(
+                      padding: EdgeInsets.all(8),
+                      child: Text(
+                        'Änderungen übernehmen. Weiter.',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-              Container(
-                height: 10,
-              ),
-            ],
-          ),
-          if (_showEingabefeld)
-            Container(
-              color: Colors.grey.withOpacity(0.5),
+                Container(
+                  height: 10,
+                ),
+              ],
             ),
-          if (_showEingabefeld)
-            Center(
-              child: Card(
-                color: Colors.white,
-                child: Padding(
-                  padding: const EdgeInsets.all(8),
-                  child: Flex(
-                    direction: Axis.vertical,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8),
-                        child: Text(
-                          _inputBoxTopic,
-                          style: TextStyle(
-                            fontSize: 22,
-                            fontWeight: FontWeight.bold,
-                            decoration: TextDecoration.underline,
+            if (_showEingabefeld)
+              Container(
+                color: Colors.grey.withOpacity(0.5),
+              ),
+            if (_showEingabefeld)
+              Center(
+                child: Card(
+                  color: Colors.white,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: Flex(
+                      direction: Axis.vertical,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8),
+                          child: Text(
+                            _inputBoxTopic,
+                            style: const TextStyle(
+                              fontSize: 22,
+                              fontWeight: FontWeight.bold,
+                              decoration: TextDecoration.underline,
+                            ),
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 0, 0, 8),
-                        child: Text(
-                          'Geben Sie den neuen Wert ein:',
-                          style: TextStyle(
-                            fontSize: 18,
+                        const Padding(
+                          padding: EdgeInsets.fromLTRB(0, 0, 0, 8),
+                          child: Text(
+                            'Geben Sie den neuen Wert ein:',
+                            style: TextStyle(
+                              fontSize: 18,
+                            ),
+                            textAlign: TextAlign.center,
                           ),
-                          textAlign: TextAlign.center,
                         ),
-                      ),
-                      Container(
-                        width: 300,
-                        child: Flex(
-                          direction: Axis.horizontal,
-                          children: [
-                            Container(
-                              width: 50,
-                              height: 50,
-                              child: Ink(
-                                decoration: ShapeDecoration(
-                                  color: Colors.red,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(
-                                        10,
+                        Container(
+                          width: 300,
+                          child: Flex(
+                            direction: Axis.horizontal,
+                            children: [
+                              Container(
+                                width: 50,
+                                height: 50,
+                                child: Ink(
+                                  decoration: const ShapeDecoration(
+                                    color: Colors.red,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(
+                                          10,
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ),
-                                child: IconButton(
-                                  icon: Icon(
-                                    Icons.cancel_outlined,
+                                  child: IconButton(
+                                    icon: const Icon(
+                                      Icons.cancel_outlined,
+                                    ),
+                                    onPressed: () {
+                                      setState(() {
+                                        _showEingabefeld = false;
+                                      });
+                                    },
                                   ),
-                                  onPressed: () {
+                                ),
+                              ),
+                              Container(
+                                width: 25,
+                              ),
+                              Container(
+                                width: 150,
+                                child: TextField(
+                                  autocorrect: false,
+                                  onSubmitted: (result) {
+                                    // Selbe Logik wie unten, nur dass für das
+                                    // onSubmitted-Feld wir von Flutter den
+                                    //  result-String direkt geliefert bekommen
                                     setState(() {
+                                      _inputBoxInputHandler(result);
                                       _showEingabefeld = false;
                                     });
                                   },
-                                ),
-                              ),
-                            ),
-                            Container(
-                              width: 25,
-                            ),
-                            Container(
-                              width: 150,
-                              child: TextField(
-                                autocorrect: false,
-                                onSubmitted: (String result) {
-                                  // Selbe Logik wie unten, nur dass für das
-                                  // onSubmitted-Feld wir von Flutter den
-                                  //  result-String direkt geliefert bekommen
-                                  setState(() {
-                                    _inputBoxInputHandler(result);
-                                    _showEingabefeld = false;
-                                  });
-                                },
-                                controller: _inputBoxTextFieldController,
-                                decoration: InputDecoration(
-                                  labelText: 'Ihre Eingabe',
-                                  border: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Colors.blue,
-                                    ),
-                                  ),
-                                ),
-                                keyboardType: TextInputType.number,
-                              ),
-                            ),
-                            Container(
-                              width: 25,
-                            ),
-                            Container(
-                              width: 50,
-                              height: 50,
-                              child: Ink(
-                                decoration: ShapeDecoration(
-                                  color: Colors.green,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(
-                                        10,
+                                  controller: _inputBoxTextFieldController,
+                                  decoration: const InputDecoration(
+                                    labelText: 'Ihre Eingabe',
+                                    border: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Colors.blue,
                                       ),
                                     ),
                                   ),
-                                ),
-                                child: IconButton(
-                                  icon: Icon(
-                                    Icons.done,
-                                  ),
-                                  onPressed: () {
-                                    // Wir nutzen den gepeicherten Input-Handler und aktualisieren
-                                    // damit jeweils den richtigen Wert, auch wenn wir an dieser
-                                    // Stelle eigentlich gar nicht wissen, welcher der Setting-Werte
-                                    // gerade editiert wird. Das ganze wird verpackt in setState,
-                                    // damit sich die GUI updated.
-                                    setState(() {
-                                      _inputBoxInputHandler(_inputBoxTextFieldController.text);
-                                      _showEingabefeld = false;
-                                    });
-                                  },
+                                  keyboardType: TextInputType.number,
                                 ),
                               ),
-                            )
-                          ],
+                              Container(
+                                width: 25,
+                              ),
+                              Container(
+                                width: 50,
+                                height: 50,
+                                child: Ink(
+                                  decoration: const ShapeDecoration(
+                                    color: Colors.green,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(
+                                          10,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  child: IconButton(
+                                    icon: const Icon(
+                                      Icons.done,
+                                    ),
+                                    onPressed: () {
+                                      // Wir nutzen den gepeicherten Input-Handler und aktualisieren
+                                      // damit jeweils den richtigen Wert, auch wenn wir an dieser
+                                      // Stelle eigentlich gar nicht wissen, welcher der Setting-Werte
+                                      // gerade editiert wird. Das ganze wird verpackt in setState,
+                                      // damit sich die GUI updated.
+                                      setState(() {
+                                        _inputBoxInputHandler(
+                                            _inputBoxTextFieldController.text);
+                                        _showEingabefeld = false;
+                                      });
+                                    },
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-        ],
-      ),
-    );
-  }
+          ],
+        ),
+      );
 
   InkWell buildCard({
     required String title,
@@ -298,58 +298,58 @@ class _SettingsScreenState extends State<SettingsScreen> {
     required String currentValueFormattedString,
     required Function newValueHandler,
     bool times100 = false,
-  }) {
-    return InkWell(
-      onTap: () {
-        setState(() {
-          _showInputBox(
-            title: title,
-            currentValue: currentValue,
-            newValueHandler: newValueHandler,
-            times100: times100,
-          );
-        });
-      },
-      child: Card(
-        color: Colors.blue[50],
-        child: Padding(
-          padding: const EdgeInsets.all(8),
-          child: Flex(
-            direction: Axis.horizontal,
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Expanded(
-                child: Text(
-                  title,
-                  style: TextStyle(fontSize: 18),
+  }) =>
+      InkWell(
+        onTap: () {
+          _setState(() {
+            _showInputBox(
+              title: title,
+              currentValue: currentValue,
+              newValueHandler: newValueHandler,
+              times100: times100,
+            );
+          });
+        },
+        child: Card(
+          color: Colors.blue[50],
+          child: Padding(
+            padding: const EdgeInsets.all(8),
+            child: Flex(
+              direction: Axis.horizontal,
+              children: [
+                Expanded(
+                  child: Text(
+                    title,
+                    style: const TextStyle(fontSize: 18),
+                  ),
                 ),
-              ),
-              Expanded(
-                child: Text(currentValueFormattedString,
-                    textAlign: TextAlign.right,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      fontSize: 18,
-                    )),
-              ),
-            ],
+                Expanded(
+                  child: Text(currentValueFormattedString,
+                      textAlign: TextAlign.right,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        fontSize: 18,
+                      )),
+                ),
+              ],
+            ),
           ),
         ),
-      ),
-    );
-  }
+      );
+
+  void _setState(Null Function() param0) {}
 
   String _getEuro(int zahl) {
-    int euro = zahl ~/ 100;
-    int zcent = (zahl - euro * 100) ~/ 10;
-    int cent = zahl - euro * 100 - zcent * 10;
+    final euro = zahl ~/ 100;
+    final zcent = (zahl - euro * 100) ~/ 10;
+    final cent = zahl - euro * 100 - zcent * 10;
     return '$euro,$zcent$cent Euro';
   }
 
   void _showInputBox({
     required String title,
-    dynamic currentValue,
     required Function newValueHandler,
+    dynamic currentValue,
     bool times100 = false,
   }) {
     // den Handler, mit dem wir später den Wert wieder in die Settings schreiben,
@@ -359,7 +359,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     // in dem Textfeld angezeigt wird
     _inputBoxTopic = title;
     // Zuerst legen wir fest, wie der bereits vorhandene Wert dargestellt werden soll
-    String current = currentValue.toString();
+    var current = currentValue.toString();
     // Bei Werten wie Euro-Angaben speichern wir ja in echt die Cents als int-Wert.
     // Bei der Eingabe soll aber ein Kommawert eingegeben werden können und daher
     // wird auch der alte Wert als Kommazahl angegeben.
@@ -370,10 +370,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
         current = '0$current';
       }
       // Danach: Alles, bis auf die letzten zwei Zeichen plus Komma plus die letzten zwei Zeichen
-      current = current.substring(0, current.length - 2) + ',' + current.substring(current.length - 2);
+      current = current.substring(0, current.length - 2) +
+          ',' +
+          current.substring(current.length - 2);
     }
     // Dieser Wert wird nun in den TextEditingController geschrieben
-    _inputBoxTextFieldController = TextEditingController.fromValue(TextEditingValue(text: current));
+    _inputBoxTextFieldController =
+        TextEditingController.fromValue(TextEditingValue(text: current));
     // Das Textfeld wird eingeblendet
     setState(() {
       _showEingabefeld = true;
