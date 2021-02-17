@@ -226,7 +226,6 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
       if (_eingabe.length == 5 && Funktionen.isNumeric(_eingabe)) {
         final mp = MapProvider();
         final resultat = await mp.getResult(Eingabe(_eingabe));
-
         await Navigator.pushNamed(context, ResultatScreen.routeName, arguments: resultat);
       }
     } else {
