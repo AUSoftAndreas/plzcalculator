@@ -27,26 +27,20 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
     double resY;
     double buttSize;
     final screenPadding = MediaQuery.of(context).padding;
-    const stdPadding = 10;
+    const stdPadding = 10.0;
 
     if (MediaQuery.of(context).orientation == Orientation.portrait) {
       calcHeight = 80;
-      resY = MediaQuery.of(context).size.height -
-          screenPadding.top -
-          screenPadding.bottom -
-          kToolbarHeight -
-          calcHeight;
+      resY = MediaQuery.of(context).size.height - screenPadding.top - screenPadding.bottom - kToolbarHeight - calcHeight;
       //resY = 10 * stdPadding + 4 * buttSize;
       final buttSizeY = (resY - 11 * stdPadding) / 4;
-      resX = MediaQuery.of(context).size.width -
-          screenPadding.left -
-          screenPadding.right;
+      resX = MediaQuery.of(context).size.width - screenPadding.left - screenPadding.right;
       //resX = 6 * stdPadding + 3 * buttSizeX
       final buttSizeX = (resX - 6 * stdPadding) / 3;
       // ignore: avoid_as
-      padX = stdPadding as double;
+      padX = stdPadding;
       // ignore: avoid_as
-      padY = stdPadding as double;
+      padY = stdPadding;
       if (buttSizeX > buttSizeY) {
         buttSize = buttSizeY;
         padX = (resX - 3 * buttSize) / 6;
@@ -58,20 +52,14 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
     } else {
       // LANDSCAPE
       calcHeight = 80;
-      resY = MediaQuery.of(context).size.height -
-          screenPadding.top -
-          screenPadding.bottom -
-          kToolbarHeight -
-          calcHeight;
+      resY = MediaQuery.of(context).size.height - screenPadding.top - screenPadding.bottom - kToolbarHeight - calcHeight;
       final buttSizeY = (resY - 6 * stdPadding) / 2;
-      resX = MediaQuery.of(context).size.width -
-          screenPadding.left -
-          screenPadding.right;
+      resX = MediaQuery.of(context).size.width - screenPadding.left - screenPadding.right;
       final buttSizeX = (resX - 12 * stdPadding) / 6;
       // ignore: avoid_as
-      padX = stdPadding as double;
+      padX = stdPadding;
       // ignore: avoid_as
-      padY = stdPadding as double;
+      padY = stdPadding;
       if (buttSizeX > buttSizeY) {
         buttSize = buttSizeY;
         padX = (resX - 6 * buttSize) / 12;
@@ -127,10 +115,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
               height: resY,
               width: resX,
               child: GridView.count(
-                crossAxisCount:
-                    (MediaQuery.of(context).orientation == Orientation.portrait)
-                        ? 3
-                        : 6,
+                crossAxisCount: (MediaQuery.of(context).orientation == Orientation.portrait) ? 3 : 6,
                 crossAxisSpacing: 2 * padX,
                 mainAxisSpacing: 2 * padY,
                 children: _buildKeys(MediaQuery.of(context).orientation),
@@ -165,8 +150,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
             ),
           ),
         );
-      } else if ((x == 10 && orientation == Orientation.portrait) ||
-          (x == 11 && orientation == Orientation.landscape)) {
+      } else if ((x == 10 && orientation == Orientation.portrait) || (x == 11 && orientation == Orientation.landscape)) {
         list.add(
           Card(
             color: Colors.grey[350],
@@ -186,8 +170,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
             ),
           ),
         );
-      } else if ((x == 11 && orientation == Orientation.portrait) ||
-          (x == 10 && orientation == Orientation.landscape)) {
+      } else if ((x == 11 && orientation == Orientation.portrait) || (x == 10 && orientation == Orientation.landscape)) {
         list.add(
           Card(
             color: Colors.grey[350],
@@ -244,8 +227,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
         final mp = MapProvider();
         final resultat = await mp.getResult(Eingabe(_eingabe));
 
-        await Navigator.pushNamed(context, ResultatScreen.routeName,
-            arguments: resultat);
+        await Navigator.pushNamed(context, ResultatScreen.routeName, arguments: resultat);
       }
     } else {
       if (_eingabe.length < 5) {
