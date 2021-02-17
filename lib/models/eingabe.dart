@@ -5,7 +5,8 @@ class Eingabe {
   final String _zielPlz;
   final String _startPlz = Settings().ausgangsort;
 
-  /// Diese Klasse fasst die Daten zusammen mit einer konkreten zielPlz
+  /// Konstruktor der Klasse Eingabe
+  /// Die Ziel-PLZ kann/muss bestimmt werden bei Konstruktion des Objektes
   Eingabe(String zielPlz) : _zielPlz = zielPlz;
 
   /// PLZ des Zielortes

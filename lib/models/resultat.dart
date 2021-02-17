@@ -1,39 +1,39 @@
 import 'package:plzcalculator/models/settings.dart';
 
-/// Das Ergebniss der anfrage
+/// Das Ergebniss einer Routenabfrage
 class Resultat {
-  // gegeben bei Konstruktion
   /// Die Distanz zwischen der startPlz und der zielPlz
   final int? fahrtstrecke;
 
-  /// Die Zeit die benötigt wird um die Distanz zu überwinden
+  /// Die Zeit, die benötigt wird, um die Distanz zu überwinden
   final int? fahrtzeit;
 
-  /// Ein Fehler
+  /// Ist true, wenn ein Fehler bei der Abfrage geschah, zum Beispiel 
+  /// durch Verbindungsabbruch
   final bool error;
 
-  /// Schriftliche bezeichnung des Fehlers
+  /// Schriftliche Bezeichnung eines eventuellen Fehlers
   final String? errorMessage;
-  // errechnet
-  /// Die höhe der Kosten für die Strecke
+
+  /// Die Höhe der Fahrtkosten (gemäß Km-Pauschale) für die Strecke
   int fahrtkostenStrecke = 0;
 
-  /// Die höhe der Fahrtkosten
+  /// Die Höhe der Fahrtkosten (gemäß Stunden-Pauschale) für die Strecke
   int fahrtkostenZeit = 0;
 
-  /// Die höhe der Hotelkosten
+  /// Die Höhe der Hotelkosten, so Hotelkosten anfallen
   int hotelkosten = 0;
 
   /// Die Summer aller Kosten
   int summe = 0;
 
-  /// Die höhe der Mehrwertsteuer
+  /// Die Höhe der Mehrwertsteuer
   int mwst = 0;
 
-  /// Die summe zzgl der mwst.
+  /// Die Summe inklusive der Mehrwertsteuer
   int bruttosumme = 0;
 
-  /// Das Ergebniss der anfrage
+  /// Konstruktor für das Ergebnis der Abfrage
   Resultat({
     this.fahrtstrecke,
     this.fahrtzeit,
