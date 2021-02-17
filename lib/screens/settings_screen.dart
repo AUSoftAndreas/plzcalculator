@@ -46,7 +46,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ListView(
               children: [
                 _buildCard(
-                  title: 'Ausgangsort',
+                  title: 'Start-Postleitzahl',
                   currentValue: _settings.ausgangsort,
                   currentValueFormattedString: _settings.ausgangsort,
                   newValueHandler: _settings.setAusgangsort,
@@ -298,7 +298,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }) =>
       InkWell(
         onTap: () {
-          _setState(() {
+          setState(() {
             _showInputBox(
               title: title,
               currentValue: currentValue,
@@ -333,8 +333,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ),
         ),
       );
-
-  void _setState(Null Function() param0) {}
 
   String _getEuro(int zahl) {
     final euro = zahl ~/ 100;
