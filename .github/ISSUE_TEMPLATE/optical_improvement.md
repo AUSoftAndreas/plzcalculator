@@ -1,7 +1,7 @@
 ---
 name: Optical improvement / Optik-Verbesserung
 about: Help us make this project more beautiful / Hilf, das Projekt zu verschönern
-title: "[OPTICS] "
+title: "[PLZ] "
 labels: "Optics"
 assignees: ""
 ---

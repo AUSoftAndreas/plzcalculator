@@ -1,7 +1,7 @@
 ---
 name: Feature request / Feature-Anfrage
 about: Suggest an idea for this project / Schlag eine Idee vor
-title: "[FEAT] "
+title: "[PLZ] "
 labels: "Feature"
 assignees: ""
 ---
